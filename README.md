@@ -6,8 +6,8 @@ With this configuration, you can import environment variables anywhere. Even in 
 Add the following to your `package.json`:
 ```json
 "config": {
-  "ionic_optimization": "./src/environments/optimization.config.js",
-  "ionic_webpack": "./src/environments/webpack.config.js"
+  "ionic_optimization": "./config/optimization.config.js",
+  "ionic_webpack": "./config/webpack.config.js"
 }
 ```
 
@@ -21,7 +21,7 @@ Add the following to your `tsconfig.json` in `compilerOptions`:
 }
 ```
 
-Create a file `src/environments/optimization.config.js` and paste the following:
+Create a file in your base directory `config/optimization.config.js` and paste the following:
 ```javascript
 var path = require('path');
 var useDefaultConfig = require('@ionic/app-scripts/config/optimization.config.js');
@@ -35,7 +35,7 @@ module.exports = function () {
 };
 ```
 
-Create a file `src/environments/webpack.config.js` and paste the following:
+Create another file in your base directory `config/webpack.config.js` and paste the following:
 ```javascript
 var path = require('path');
 var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
@@ -64,7 +64,7 @@ export const ENV = {
 ```
 For any other configuration, just add another file `src/environments/environment.*.ts` which will then be used with build flags.
 
-You can then import your environemt variables anywhere!
+You can then import your environment variables anywhere!
 ```typescript
 import { ENV } from '@app/env'
 ```

@@ -34,8 +34,8 @@
     "typescript": "2.3.4"
   },
   "config": {
-    "ionic_optimization": "./src/environments/optimization.config.js",
-    "ionic_webpack": "./src/environments/webpack.config.js"
+    "ionic_optimization": "./config/optimization.config.js",
+    "ionic_webpack": "./config/webpack.config.js"
   },
   "description": "Ionic Environment Variables Demo"
 }
