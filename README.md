@@ -1,6 +1,7 @@
 ## Ionic Environment Variables
 
-With this configuration, you can import environment variables anywhere. Even in your `app.module.ts`
+With this configuration, you can import environment variables anywhere, even in your `app.module.ts`.
+Also supports any number of custom environments (prod, staging, dev, etc.)
 
 
 Add the following to your `package.json`:
@@ -62,7 +63,7 @@ export const ENV = {
   mode: 'Production'
 }
 ```
-For any other configuration, just add another file `src/environments/environment.*.ts` which will then be used with build flags.
+For any other configuration, just add another file `src/environments/environment.*.ts` which will then be used with build flags. It is that easy!
 
 You can then import your environment variables anywhere!
 ```typescript
