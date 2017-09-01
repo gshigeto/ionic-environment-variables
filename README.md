@@ -29,7 +29,7 @@ var useDefaultConfig = require('@ionic/app-scripts/config/optimization.config.js
 
 module.exports = function () {
   useDefaultConfig.resolve.alias = {
-    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'dev' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
+    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'prod' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
   };
 
   return useDefaultConfig;
@@ -43,24 +43,24 @@ var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
 module.exports = function () {
   useDefaultConfig.resolve.alias = {
-    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'dev' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
+    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'prod' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
   };
 
   return useDefaultConfig;
 };
 ```
 
-Create a default file `src/environments/environment.ts` which will be used for your development environment:
-```typescript
-export const ENV = {
-  mode: 'Development'
-}
-```
-
-Create a default file `src/environments/environment.prod.ts` which will be used for your production environment:
+Create a default file `src/environments/environment.ts` which will be used for your **PRODUCTION** environment:
 ```typescript
 export const ENV = {
   mode: 'Production'
+}
+```
+
+Create a default file `src/environments/environment.dev.ts` which will be used for your development environment:
+```typescript
+export const ENV = {
+  mode: 'Development'
 }
 ```
 For any other configuration, just add another file `src/environments/environment.*.ts` which will then be used with build flags. It is that easy!
