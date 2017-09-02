@@ -70,4 +70,11 @@ You can then import your environment variables anywhere!
 import { ENV } from '@app/env'
 ```
 
+**NOTE** Remember to ignore your files in your `.gitignore`
+```
+# Envrionment Variables
+**/environment.*
+!**/environment.model.ts
+```
+
 To test production builds: `npm run ionic:build --prod` then open the www/index.html file in your browser.
