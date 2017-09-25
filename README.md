@@ -1,4 +1,4 @@
-## Ionic Environment Variables
+# Ionic Environment Variables
 
 With this configuration, you can import environment variables anywhere, even in your `app.module.ts`.
 Also supports any number of custom environments (prod, staging, dev, etc.)
@@ -78,3 +78,18 @@ import { ENV } from '@app/env'
 ```
 
 To test production builds: `npm run ionic:build --prod` then open the www/index.html file in your browser.
+# If more than `prod` and `dev` environments are wanted
+
+1. Change your `optimization.config.js` and `webpack.config.js` `IONIC_ENV` variable to be something else. For example:
+```javascript
+'./src/environments/environment' + (process.env.MY_ENV === 'prod' ? '' : '.' + process.env.MY_ENV) + '.ts'
+```
+2. Add to your `package.json` another run script and name it whatever you would like
+```json
+"serve:testing": "MY_ENV=testing ionic-app-scripts serve"
+```
+3. Create your testing file `src/environments/environment.testing.ts`. This should be whatever you set your `MY_ENV` to.
+4. Finally, run the script by using the name you used for your script in `package.json`
+```bash
+$ npm run serve:testing
+```
