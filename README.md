@@ -7,7 +7,6 @@ Also supports any number of custom environments (prod, staging, dev, etc.)
 Add the following to your `package.json`:
 ```json
 "config": {
-  "ionic_optimization": "./config/optimization.config.js",
   "ionic_webpack": "./config/webpack.config.js"
 }
 ```
@@ -22,30 +21,37 @@ Add the following to your `tsconfig.json` in `compilerOptions`:
 }
 ```
 
-Create a file in your base directory `config/optimization.config.js` and paste the following:
+Create a file in your base directory `config/webpack.config.js` and paste the following:
 ```javascript
-var path = require('path');
-var useDefaultConfig = require('@ionic/app-scripts/config/optimization.config.js');
-
-module.exports = function () {
-  useDefaultConfig.resolve.alias = {
-    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'prod' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
-  };
-
-  return useDefaultConfig;
-};
-```
-
-Create another file in your base directory `config/webpack.config.js` and paste the following:
-```javascript
+var chalk = require("chalk");
+var fs = require('fs');
 var path = require('path');
 var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
 
-module.exports = function () {
-  useDefaultConfig.resolve.alias = {
-    "@app/env": path.resolve('./src/environments/environment' + (process.env.IONIC_ENV === 'prod' ? '' : '.' + process.env.IONIC_ENV) + '.ts')
-  };
+var env = process.env.IONIC_ENV;
 
+if (env === 'prod' || env === 'dev') {
+  useDefaultConfig[env].resolve.alias = {
+    "@app/env": path.resolve(environmentPath())
+  };
+} else {
+  // Default to dev config
+  useDefaultConfig[env] = useDefaultConfig.dev;
+  useDefaultConfig[env].resolve.alias = {
+    "@app/env": path.resolve(environmentPath())
+  };
+}
+
+function environmentPath() {
+  var filePath = './src/environments/environment' + (env === 'prod' ? '' : '.' + env) + '.ts';
+  if (!fs.existsSync(filePath)) {
+    console.log(chalk.red('\n' + filePath + ' does not exist!'));
+  } else {
+    return filePath;
+  }
+}
+
+module.exports = function () {
   return useDefaultConfig;
 };
 ```
@@ -63,7 +69,6 @@ export const ENV = {
   mode: 'Development'
 }
 ```
-For any other configuration, just add another file `src/environments/environment.*.ts` which will then be used with build flags. It is that easy!
 
 You can then import your environment variables anywhere!
 ```typescript
@@ -80,9 +85,9 @@ import { ENV } from '@app/env'
 To test production builds: `npm run ionic:build --prod` then open the www/index.html file in your browser.
 # If more than `prod` and `dev` environments are wanted
 
-1. Change your `optimization.config.js` and `webpack.config.js` `IONIC_ENV` variable to be something else. For example:
+1. Change your `webpack.config.js` `IONIC_ENV` variable to be something else. For example:
 ```javascript
-'./src/environments/environment' + (process.env.MY_ENV === 'prod' ? '' : '.' + process.env.MY_ENV) + '.ts'
+var env = process.env.MY_ENV;
 ```
 2. Add to your `package.json` another run script and name it whatever you would like
 ```json
@@ -93,3 +98,5 @@ To test production builds: `npm run ionic:build --prod` then open the www/index.
 ```bash
 $ npm run serve:testing
 ```
+
+**NOTE**: When running with a custom variable, production builds still need `--prod` flag
