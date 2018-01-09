@@ -81,7 +81,7 @@ import { ENV } from '@app/env'
 
 **NOTE** Remember to ignore your files in your `.gitignore`
 ```
-# Envrionment Variables
+# Environment Variables
 **/environment.*
 !**/environment.model.ts
 ```
