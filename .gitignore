@@ -36,3 +36,5 @@ UserInterfaceState.xcuserstate
 # Envrionment Variables
 **/environment.*
 !**/environment.model.ts
+
+.sourcemaps/
