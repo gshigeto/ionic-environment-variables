@@ -2,7 +2,7 @@ var chalk = require("chalk");
 var fs = require('fs');
 var path = require('path');
 var useDefaultConfig = require('@ionic/app-scripts/config/webpack.config.js');
-
+var isNil = require('lodash/isNil');
 var env = process.env.MY_ENV;
 
 useDefaultConfig.prod.resolve.alias = {
@@ -13,7 +13,7 @@ useDefaultConfig.dev.resolve.alias = {
   "@app/env": path.resolve(environmentPath('dev'))
 };
 
-if (env !== 'prod' && env !== 'dev') {
+if (!isNil(env) && env !== 'prod' && env !== 'dev') {
   // Default to dev config
   useDefaultConfig[env] = useDefaultConfig.dev;
   useDefaultConfig[env].resolve.alias = {
